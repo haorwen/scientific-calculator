@@ -1,0 +1,239 @@
+/* 基础样式和变量 */
+:root {
+    --bg-color: #f5f5f5;
+    --calculator-bg: #ffffff;
+    --display-bg: #f0f0f0;
+    --button-bg: #ffffff;
+    --button-color: #333333;
+    --button-shadow: rgba(0, 0, 0, 0.1);
+    --operator-bg: #f8f9fa;
+    --function-bg: #e9ecef;
+    --scientific-bg: #e2e6ea;
+    --equals-bg: #4dabf7;
+    --equals-color: #ffffff;
+    --preview-color: #6c757d;
+    --transition-speed: 0.3s;
+}
+
+/* 暗黑模式变量 */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --calculator-bg: #1e1e1e;
+    --display-bg: #2d2d2d;
+    --button-bg: #2d2d2d;
+    --button-color: #ffffff;
+    --button-shadow: rgba(0, 0, 0, 0.3);
+    --operator-bg: #3a3a3a;
+    --function-bg: #3a3a3a;
+    --scientific-bg: #323232;
+    --equals-bg: #0b7dda;
+    --equals-color: #ffffff;
+    --preview-color: #adb5bd;
+}
+
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* 计算器容器 */
+.calculator-container {
+    width: 100%;
+    max-width: 360px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: var(--calculator-bg);
+    transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* 主题切换开关 */
+.theme-toggle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--button-color);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    margin: 0 8px;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked + label {
+    background-color: #2196F3;
+}
+
+.toggle-switch input:checked + label:before {
+    transform: translateX(20px);
+}
+
+/* 计算器显示区域 */
+.display {
+    background-color: var(--display-bg);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: right;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.input {
+    font-size: 1.8rem;
+    min-height: 2.2rem;
+    color: var(--button-color);
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.preview {
+    font-size: 1.2rem;
+    min-height: 1.5rem;
+    color: var(--preview-color);
+    margin-top: 5px;
+    transition: opacity 0.2s ease;
+}
+
+/* 按钮区域 */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.button {
+    background-color: var(--button-bg);
+    color: var(--button-color);
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--button-shadow);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.button:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 2px var(--button-shadow);
+}
+
+/* 不同类型按钮的样式 */
+.operator {
+    background-color: var(--operator-bg);
+    font-weight: bold;
+}
+
+.function {
+    background-color: var(--function-bg);
+}
+
+.scientific {
+    background-color: var(--scientific-bg);
+    font-size: 1rem;
+}
+
+.button[data-value="="] {
+    background-color: var(--equals-bg);
+    color: var(--equals-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 400px) {
+    .calculator-container {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .button {
+        padding: 12px 0;
+        font-size: 1rem;
+    }
+    
+    .scientific {
+        font-size: 0.9rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.calculator-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.button {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* 按钮点击动画 */
+.button-click {
+    animation: buttonClick 0.2s ease-out;
+}
+
+@keyframes buttonClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
